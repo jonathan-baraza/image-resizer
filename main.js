@@ -17,8 +17,11 @@ app
   .whenReady()
   .then(() => {
     createMainWindow();
-
-    app.on("activate", () => {});
+    app.on("activate", () => {
+      if (BrowserWindow.getAllWindows.length === 0) {
+        createMainWindow();
+      }
+    });
   })
   .catch((e) => {
     console.log("error");
