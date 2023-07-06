@@ -1,9 +1,10 @@
 const { error } = require("console");
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, Menu } = require("electron");
 const path = require("path");
 const isMac = process.platform === "darwin";
 const isDev = process.env.NODE_ENV !== "production";
 
+//create the main window
 function createMainWindow() {
   const mainWindow = new BrowserWindow({
     title: "Image Resizer",
@@ -19,10 +20,15 @@ function createMainWindow() {
   mainWindow.loadFile(path.join(__dirname, "./renderer/index.html"));
 }
 
+//App is ready
 app
   .whenReady()
   .then(() => {
     createMainWindow();
+
+    //implement menu
+    const mainMenu = Menu.buildFromTemplate(menu);
+    Menu.setApplicationMenu(mainMenu);
 
     //just making sure the window gets created when the app is activated.
     app.on("activate", () => {
@@ -37,18 +43,18 @@ app
   });
 
 //Menu template
-const menu=[
+const menu = [
   {
-    label:"File",
-    submenu:[
+    label: "File",
+    submenu: [
       {
-        label:"Quit",
-        click:()=>app.quit(),
-        accelerator:"Ctrl+w"
-      }
-    ]
-  }
-]
+        label: "Quit",
+        click: () => app.quit(),
+        accelerator: "Ctrl+w",
+      },
+    ],
+  },
+];
 
 //Mac behaves differently so you have to close the app when all windows are closed
 app.on("window-all-closed", () => {
