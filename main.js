@@ -24,8 +24,8 @@ function createMainWindow() {
 function createAboutWindow() {
   const aboutWindow = new BrowserWindow({
     title: "About",
-    height: 500,
-    width: 500,
+    height: 300,
+    width: 300,
   });
   aboutWindow.removeMenu();
   aboutWindow.loadFile(path.join(__dirname, "./renderer/about.html"));
