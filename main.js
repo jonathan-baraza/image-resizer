@@ -36,6 +36,20 @@ app
     console.log(error);
   });
 
+//Menu template
+const menu=[
+  {
+    label:"File",
+    submenu:[
+      {
+        label:"Quit",
+        click:()=>app.quit(),
+        accelerator:"Ctrl+w"
+      }
+    ]
+  }
+]
+
 //Mac behaves differently so you have to close the app when all windows are closed
 app.on("window-all-closed", () => {
   if (isMac) {
