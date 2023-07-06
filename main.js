@@ -25,7 +25,6 @@ app
   .whenReady()
   .then(() => {
     createMainWindow();
-
     //implement menu
     const mainMenu = Menu.buildFromTemplate(menu);
     Menu.setApplicationMenu(mainMenu);
@@ -44,15 +43,18 @@ app
 
 //Menu template
 const menu = [
+  // {
+  //   label: "File",
+  //   submenu: [
+  //     {
+  //       label: "Quit",
+  //       click: () => app.quit(),
+  //       accelerator: "Ctrl+w",
+  //     },
+  //   ],
+  // },
   {
-    label: "File",
-    submenu: [
-      {
-        label: "Quit",
-        click: () => app.quit(),
-        accelerator: "Ctrl+w",
-      },
-    ],
+    role: "fileMenu",
   },
 ];
 
