@@ -7,6 +7,15 @@ const widthInput = document.querySelector("#width");
 
 function loadImage(e) {
   const file = e.target.files[0];
+  if (!isFileImage(file)) {
+    console.log("Please select an image");
+    return;
+  }
+  console.log("success");
+  console.log(file);
+
+  form.style.display = "block";
+  filename.innerHTML = file.name;
 }
 
 //Make sure file is image
@@ -18,7 +27,7 @@ function isFileImage(file) {
     "image/jpg",
   ];
 
-  return file && acceptedImageTypes.includes(file["type"]);
+  return file && acceptedImageTypes.includes(file.type);
 }
 
 img.addEventListener("change", loadImage);
