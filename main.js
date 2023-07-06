@@ -2,13 +2,19 @@ const { error } = require("console");
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const isMac = process.platform === "darwin";
+const isDev = process.env.NODE_ENV !== "production";
 
 function createMainWindow() {
   const mainWindow = new BrowserWindow({
     title: "Image Resizer",
-    width: 500,
+    width: isDev ? 1000 : 500,
     height: 600,
   });
+
+  //open dev tools if in dev environment
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.loadFile(path.join(__dirname, "./renderer/index.html"));
 }
