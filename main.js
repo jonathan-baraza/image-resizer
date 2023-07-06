@@ -53,9 +53,27 @@ const menu = [
   //     },
   //   ],
   // },
+  ...(isMac
+    ? [
+        {
+          label: app.name,
+          submenu: [{ label: "About" }],
+        },
+      ]
+    : []),
   {
     role: "fileMenu",
   },
+  ...(!isMac?[
+    {
+      label:"Help",
+      submenu:[
+        {
+          label:"About"
+        }
+      ]
+    }
+  ]:[])
 ];
 
 //Mac behaves differently so you have to close the app when all windows are closed
