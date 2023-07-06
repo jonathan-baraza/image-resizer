@@ -17,6 +17,8 @@ app
   .whenReady()
   .then(() => {
     createMainWindow();
+
+    //just making sure the window gets created when the app is activated.
     app.on("activate", () => {
       if (BrowserWindow.getAllWindows.length === 0) {
         createMainWindow();
@@ -28,6 +30,7 @@ app
     console.log(error);
   });
 
+//Mac behaves differently so you have to close the app when all windows are closed
 app.on("window-all-closed", () => {
   if (isMac) {
     app.quit();
