@@ -1,6 +1,7 @@
 const { error } = require("console");
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
+const isMac = process.platform === "darwin";
 
 function createMainWindow() {
   const mainWindow = new BrowserWindow({
@@ -16,8 +17,16 @@ app
   .whenReady()
   .then(() => {
     createMainWindow();
+
+    app.on("activate", () => {});
   })
   .catch((e) => {
     console.log("error");
     console.log(error);
   });
+
+app.on("window-all-closed", () => {
+  if (isMac) {
+    app.quit();
+  }
+});
