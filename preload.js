@@ -2,9 +2,10 @@ const os = require("os");
 const path = require("path");
 const { contextBridge } = require("electron");
 
-contextBridge.exposeInMainWorld("versions", {
+contextBridge.exposeInMainWorld("os", {
   homedir: () => os.homedir(),
-  join: (...args) => path.join(...args),
+});
 
-  //we can also expose variables, not just functions
+contextBridge.exposeInMainWorld("path", {
+  join: (...args) => path.join(...args),
 });
