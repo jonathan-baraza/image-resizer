@@ -24,6 +24,21 @@ function loadImage(e) {
   outputPath.innerHTML = path.join(os.homedir(), "desktop", "imageresizer");
 }
 
+//send image data to image
+function sendImage(e) {
+  e.preventDefault();
+  const width = widthInput.value;
+  const height = heightInput.value;
+  if (!img.files[0]) {
+    alertError("Please upload an image");
+    return;
+  }
+  if (!width || !height) {
+    alertError("Please fill in a height and width");
+    return;
+  }
+}
+
 //Make sure file is image
 function isFileImage(file) {
   const acceptedImageTypes = [
@@ -63,3 +78,4 @@ function alertSuccess(message) {
 }
 
 img.addEventListener("change", loadImage);
+form.addEventListener("submit", sendImage);
