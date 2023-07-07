@@ -22,6 +22,7 @@ function loadImage(e) {
 
   form.style.display = "block";
   filename.innerHTML = file.name;
+  outputPath.innerHTML = path.join(os.homedir(), "desktop", "imageresizer");
 }
 
 //Make sure file is image
