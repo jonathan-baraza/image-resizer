@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, shell } = require("electron");
 const path = require("path");
 const os = require("os");
 const fs = require("fs");
@@ -115,11 +115,19 @@ async function resizeImage({ imgPath, width, height, dest }) {
     //create filename
     const filename = path.basename(imgPath);
 
-
     //create dest folder if not exist
-    if(!fs.existsSync(dest)){
+    if (!fs.existsSync(dest)) {
       fs.mkdirSync(dest);
     }
+
+    //write file to destination folder
+    fs.writeFileSync(path.join(dest, filename), newPath);
+
+    //send success message
+    mainWindow.webContents.send("image:done");
+
+    //Open the dest folder
+    shell.openPath(dest);
   } catch (error) {
     console.log(error);
   }
