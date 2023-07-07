@@ -1,3 +1,5 @@
+const { ipcRenderer } = require("electron");
+
 const form = document.querySelector("#img-form");
 const img = document.querySelector("#img");
 const outputPath = document.querySelector("#output-path");
@@ -42,6 +44,11 @@ function sendImage(e) {
   }
 
   //send to main using ipcRenderer
+  ipcRenderer.send("image:resize", {
+    imgPath,
+    width,
+    height,
+  });
 }
 
 //Make sure file is image
