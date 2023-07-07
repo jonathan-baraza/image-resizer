@@ -1,10 +1,8 @@
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
 const { versions } = require("process");
 const isMac = process.platform === "darwin";
 const isDev = process.env.NODE_ENV !== "production";
-
-
 
 //create the main window
 function createMainWindow() {
@@ -96,6 +94,12 @@ const menu = [
       ]
     : []),
 ];
+
+//Respond to ipcRenderer resize
+ipcMain.on("image:resize", (e, options) => {
+  console.log("options");
+  console.log(options);
+});
 
 //Mac behaves differently so you have to close the app when all windows are closed
 app.on("window-all-closed", () => {
