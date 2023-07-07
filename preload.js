@@ -1,8 +1,10 @@
+const os = require("os");
+const path = require("path");
 const { contextBridge } = require("electron");
 
 contextBridge.exposeInMainWorld("versions", {
-  node: () => process.version.node,
-  chrome: () => process.version.chrome,
-  electron: () => process.version.electron,
+  homedir: () => os.homedir(),
+  join: (...args) => path.join(...args),
+
   //we can also expose variables, not just functions
 });
