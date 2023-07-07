@@ -8,7 +8,7 @@ const widthInput = document.querySelector("#width");
 function loadImage(e) {
   const file = e.target.files[0];
   if (!isFileImage(file)) {
-    console.log("Please select an image");
+    alertError("Please select an image");
     return;
   }
 
@@ -19,7 +19,6 @@ function loadImage(e) {
     widthInput.value = this.width;
     heightInput.value = this.height;
   };
-
   form.style.display = "block";
   filename.innerHTML = file.name;
   outputPath.innerHTML = path.join(os.homedir(), "desktop", "imageresizer");
@@ -35,6 +34,32 @@ function isFileImage(file) {
   ];
 
   return file && acceptedImageTypes.includes(file.type);
+}
+
+function alertError(message) {
+  Toastify.toast({
+    text: message,
+    duration: 5000,
+    close: false,
+    style: {
+      background: "red",
+      color: "white",
+      textAlign: "center",
+    },
+  });
+}
+
+function alertSuccess(message) {
+  Toastify.toast({
+    text: message,
+    duration: 5000,
+    close: false,
+    style: {
+      background: "green",
+      color: "white",
+      textAlign: "center",
+    },
+  });
 }
 
 img.addEventListener("change", loadImage);
