@@ -1,5 +1,7 @@
 const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
+const os = require("os");
+const fs = require("fs");
 const { versions } = require("process");
 const isMac = process.platform === "darwin";
 const isDev = process.env.NODE_ENV !== "production";
@@ -97,8 +99,8 @@ const menu = [
 
 //Respond to ipcRenderer resize
 ipcMain.on("image:resize", (e, options) => {
-  console.log("options");
-  console.log(options);
+  options.dest = path.join(os.homedir(), "desktop", "image-resizer");
+  resizeImage(options);
 });
 
 //Mac behaves differently so you have to close the app when all windows are closed
