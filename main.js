@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("path");
 const os = require("os");
 const fs = require("fs");
+const resizeImg = require("resize-img");
 const { versions } = require("process");
 const isMac = process.platform === "darwin";
 const isDev = process.env.NODE_ENV !== "production";
@@ -102,6 +103,27 @@ ipcMain.on("image:resize", (e, options) => {
   options.dest = path.join(os.homedir(), "desktop", "image-resizer");
   resizeImage(options);
 });
+
+//Resize the image
+async function resizeImage({ imgPath, width, height, dest }) {
+  try {
+    const newPath = await resizeImg(fs.readFileSync(imgPath), {
+      width: +width,
+      height: +height,
+    });
+
+    //create filename
+    const filename = path.basename(imgPath);
+
+
+    //create dest folder if not exist
+    if(!fs.existsSync(dest)){
+      fs.mkdirSync(dest);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 //Mac behaves differently so you have to close the app when all windows are closed
 app.on("window-all-closed", () => {
