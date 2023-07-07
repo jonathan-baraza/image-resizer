@@ -7,9 +7,10 @@ const { versions } = require("process");
 const isMac = process.platform === "darwin";
 const isDev = process.env.NODE_ENV !== "production";
 
+let mainWindow;
 //create the main window
 function createMainWindow() {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     title: "Image Resizer",
     width: isDev ? 1000 : 500,
     height: 600,
@@ -39,7 +40,7 @@ function createAboutWindow() {
   aboutWindow.loadFile(path.join(__dirname, "./renderer/about.html"));
 }
 
-//App is ready
+// //App is ready
 app
   .whenReady()
   .then(() => {
@@ -47,6 +48,12 @@ app
     //implement menu
     const mainMenu = Menu.buildFromTemplate(menu);
     Menu.setApplicationMenu(mainMenu);
+
+    //Remove mainWindow from memory on close
+
+    mainWindow.on("closed", () => {
+      mainWindow = null;
+    });
 
     //just making sure the window gets created when the app is activated.
     app.on("activate", () => {
@@ -60,7 +67,7 @@ app
     console.log(error);
   });
 
-//Menu template
+// //Menu template
 const menu = [
   // {
   //   label: "File",
@@ -98,13 +105,13 @@ const menu = [
     : []),
 ];
 
-//Respond to ipcRenderer resize
+// //Respond to ipcRenderer resize
 ipcMain.on("image:resize", (e, options) => {
-  options.dest = path.join(os.homedir(), "desktop", "image-resizer");
+  options.dest = path.join(os.homedir(), "image-resizer");
   resizeImage(options);
 });
 
-//Resize the image
+// //Resize the image
 async function resizeImage({ imgPath, width, height, dest }) {
   try {
     const newPath = await resizeImg(fs.readFileSync(imgPath), {
