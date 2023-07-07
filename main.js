@@ -1,8 +1,10 @@
-const { error } = require("console");
 const { app, BrowserWindow, Menu } = require("electron");
 const path = require("path");
+const { versions } = require("process");
 const isMac = process.platform === "darwin";
 const isDev = process.env.NODE_ENV !== "production";
+
+
 
 //create the main window
 function createMainWindow() {
