@@ -29,10 +29,12 @@ function sendImage(e) {
   e.preventDefault();
   const width = widthInput.value;
   const height = heightInput.value;
+  //validate image
   if (!img.files[0]) {
     alertError("Please upload an image");
     return;
   }
+  // validate dimensions
   if (!width || !height) {
     alertError("Please fill in a height and width");
     return;
